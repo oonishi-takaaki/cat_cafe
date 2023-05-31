@@ -82,6 +82,10 @@ class AdminBlogController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $blog = Blog::findOrFail($id);
+        $blog->delete();
+        Storage::disk('public')->delete($blog->image);
+
+        return to_route('admin.blogs.index')->with('success', 'ブログを削除しました。');
     }
 }

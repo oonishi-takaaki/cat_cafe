@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreBlogRequest;
 use App\Http\Requests\Admin\UpdateBlogRequest;
 use App\Models\Blog;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Psy\CodeCleaner\ReturnTypePass;
@@ -15,7 +16,7 @@ class AdminBlogController extends Controller
     //ブログの一覧
     public function index()
     {
-        $blogs = Blog::all();
+        $blogs = Blog::latest('created_at')->paginate(10);
         return view('admin.blogs.index', ['blogs' => $blogs]);
     }
 
@@ -50,10 +51,10 @@ class AdminBlogController extends Controller
     }
 
     //指定したIDのブログの編集
-    public function edit(string $id)
+    public function edit(Blog $blog)
     {
-        $blog = Blog::findOrFail($id);
-        return view('admin.blogs.edit', ['blog' => $blog]);
+        $categories = Category::all();
+        return view('admin.blogs.edit', ['blog' => $blog, 'categories' => $categories]);
     }
 
     /**

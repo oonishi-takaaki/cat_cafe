@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreBlogRequest;
 use App\Http\Requests\Admin\UpdateBlogRequest;
 use App\Models\Blog;
+use App\Models\Cat;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Psy\CodeCleaner\ReturnTypePass;
+use Illuminate\Support\Facades\Auth;
 
 class AdminBlogController extends Controller
 {
@@ -17,7 +19,8 @@ class AdminBlogController extends Controller
     public function index()
     {
         $blogs = Blog::latest('created_at')->paginate(10);
-        return view('admin.blogs.index', ['blogs' => $blogs]);
+        $user = Auth::user();
+        return view('admin.blogs.index', ['blogs' => $blogs, 'user' => $user]);
     }
 
     //ブログの投稿画面
@@ -54,7 +57,9 @@ class AdminBlogController extends Controller
     public function edit(Blog $blog)
     {
         $categories = Category::all();
-        return view('admin.blogs.edit', ['blog' => $blog, 'categories' => $categories]);
+        $cats = Cat::all();
+        $user = Auth::user();
+        return view('admin.blogs.edit', ['blog' => $blog, 'categories' => $categories, 'cats' => $cats, 'user' => $user]);
     }
 
     /**
@@ -73,6 +78,8 @@ class AdminBlogController extends Controller
             //変更後の画像のアップデート
             $updateData['image'] = $request->file('image')->store('blogs', 'public');
         }
+        $blog->category()->associate($updateData['category_id']);
+        $blog->cats()->sync($updateData['cats'] ?? []);
         $blog->update($updateData);
 
         return to_route('admin.blogs.index')->with('success', 'ブログを更新しました。');

@@ -19,8 +19,7 @@ class AdminBlogController extends Controller
     public function index()
     {
         $blogs = Blog::latest('created_at')->paginate(10);
-        $user = Auth::user();
-        return view('admin.blogs.index', ['blogs' => $blogs, 'user' => $user]);
+        return view('admin.blogs.index', ['blogs' => $blogs]);
     }
 
     //ブログの投稿画面

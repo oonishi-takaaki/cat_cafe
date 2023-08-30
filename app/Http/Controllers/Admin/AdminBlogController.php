@@ -25,7 +25,9 @@ class AdminBlogController extends Controller
     //ブログの投稿画面
     public function create()
     {
-        return view('admin.blogs.create');
+        $categories = Category::all();
+        $cats = Cat::all();
+        return view('admin.blogs.create', ['categories' => $categories, 'cats' => $cats]);
     }
 
     //ブログの投稿
@@ -34,6 +36,7 @@ class AdminBlogController extends Controller
         $validated = $request->validated();
         $validated['image'] = $request->file('image')->store('blogs', 'public');
         Blog::create($validated);
+
 
         /*
         $savedImagePath = $request->file('image')->store('blogs', 'public');

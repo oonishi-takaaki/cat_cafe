@@ -33,17 +33,20 @@ class AdminBlogController extends Controller
     //ブログの投稿
     public function store(StoreBlogRequest $request)
     {
-        $validated = $request->validated();
-        $validated['image'] = $request->file('image')->store('blogs', 'public');
-        Blog::create($validated);
+
+        // $validated = $request->validated();
+        // $validated['image'] = $request->file('image')->store('blogs', 'public');
+        // Blog::create($validated);
 
 
-        /*
+
         $savedImagePath = $request->file('image')->store('blogs', 'public');
         $blog = new Blog($request->validated());
         $blog->image = $savedImagePath;
+        $blog->category()->associate($request['category_id']);
+        $blog->cats()->sync($request['cats'] ?? []);
         $blog->save();
-        */
+
         return to_route('admin.blogs.index')->with('success', 'ブログを投稿しました。');
     }
 

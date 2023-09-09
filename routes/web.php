@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminBlogController;
+use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ContactController;
+use Illuminate\Database\Events\TransactionCommitting;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,3 +46,8 @@ Route::post('/admin/login', [AuthController::class, 'login']);
 
 //ログアウト
 Route::post('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
+
+//transactionテスト
+Route::get('/admin/transaction', [TransactionController::class, 'index'])->name('admin.transaction.index');
+Route::post('/admin/transaction/success', [TransactionController::class, 'success'])->name('admin.transaction.success');
+Route::post('/admin/transaction/exception', [TransactionController::class, 'exception'])->name('admin.transaction.exception');

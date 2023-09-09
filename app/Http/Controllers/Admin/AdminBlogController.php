@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Psy\CodeCleaner\ReturnTypePass;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AdminBlogController extends Controller
 {
@@ -33,7 +34,6 @@ class AdminBlogController extends Controller
     //ブログの投稿
     public function store(StoreBlogRequest $request)
     {
-
         // $validated = $request->validated();
         // $validated['image'] = $request->file('image')->store('blogs', 'public');
         // Blog::create($validated);

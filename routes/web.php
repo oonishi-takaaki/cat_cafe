@@ -51,3 +51,4 @@ Route::post('/admin/logout', [AuthController::class, 'logout'])->name('admin.log
 Route::get('/admin/transaction', [TransactionController::class, 'index'])->name('admin.transaction.index');
 Route::post('/admin/transaction/success', [TransactionController::class, 'success'])->name('admin.transaction.success');
 Route::post('/admin/transaction/exception', [TransactionController::class, 'exception'])->name('admin.transaction.exception');
+Route::post('/admin/transaction/exception2', [TransactionController::class, 'exception2'])->name('admin.transaction.exception2');

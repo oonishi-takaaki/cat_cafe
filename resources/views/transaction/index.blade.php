@@ -14,6 +14,11 @@
     <form method="post" action="{{ route('admin.transaction.exception') }}">
         @csrf
         <button type="submit">失敗</button>
-    </form>
+
+    {{-- </form>
+        <form method="post" action="{{ route('admin.transaction.exception2') }}">
+        @csrf
+        <button type="submit">失敗2</button>
+    </form> --}}
 </body>
 </html>
